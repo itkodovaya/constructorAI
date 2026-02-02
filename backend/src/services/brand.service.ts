@@ -20,20 +20,46 @@ export class BrandService {
   };
 
   static async generate(brandName: string, style: string): Promise<BrandAssets> {
-    // Имитация задержки AI
-    await new Promise(resolve => setTimeout(resolve, 800));
-
     const selectedPalette = this.palettes[style as keyof typeof this.palettes] || this.palettes.minimalist;
     const selectedFonts = this.fonts[style as keyof typeof this.fonts] || this.fonts.minimalist;
     
-    // Генерация простого текстового логотипа (SVG)
-    const logoSvg = `<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-      <rect width="200" height="200" fill="${selectedPalette[1]}" rx="40"/>
-      <text x="50%" y="50%" font-family="${selectedFonts[0]}" font-size="80" font-weight="900" 
-        fill="${selectedPalette[0]}" text-anchor="middle" dominant-baseline="central">
-        ${brandName.charAt(0).toUpperCase()}
-      </text>
-    </svg>`;
+    // Fallback logo generation (template based)
+    const generateFallbackLogo = () => {
+      return `<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <rect width="200" height="200" fill="${selectedPalette[1]}" rx="40"/>
+        <text x="50%" y="50%" font-family="${selectedFonts[0]}" font-size="80" font-weight="900" 
+          fill="${selectedPalette[0]}" text-anchor="middle" dominant-baseline="central">
+          ${brandName.charAt(0).toUpperCase()}
+        </text>
+      </svg>`;
+    };
+
+    let logoSvg = '';
+
+    try {
+      const { AIService } = require('./ai.service');
+      const prompt = `Create a professional, minimalist SVG logo for a brand named "${brandName}" with style "${style}". 
+      Return ONLY the raw SVG code. No markdown, no explanations. 
+      The SVG should be 200x200 pixels. 
+      Use these colors if appropriate: ${selectedPalette.join(', ')}.
+      Make it unique and suitable for a ${style} brand.`;
+
+      const aiResponse = await AIService.generateText(prompt, 600);
+      
+      // Extract SVG from response (in case AI adds text around it)
+      const svgMatch = aiResponse.match(/<svg[\s\S]*?<\/svg>/i);
+      if (svgMatch) {
+        logoSvg = svgMatch[0];
+      } else if (aiResponse.trim().startsWith('<svg') && aiResponse.trim().endsWith('</svg>')) {
+        logoSvg = aiResponse.trim();
+      } else {
+        console.warn('AI did not return a valid SVG, using fallback.');
+        logoSvg = generateFallbackLogo();
+      }
+    } catch (error) {
+      console.error('Failed to generate AI logo:', error);
+      logoSvg = generateFallbackLogo();
+    }
 
     return {
       logo: `data:image/svg+xml;base64,${Buffer.from(logoSvg).toString('base64')}`,
