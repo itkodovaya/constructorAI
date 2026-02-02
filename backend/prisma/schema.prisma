@@ -1,0 +1,486 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/client"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// Пользователи и тарифные планы
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  passwordHash  String
+  name          String
+  plan          String    @default("free") // free, pro, business, enterprise
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  organizationId String?
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  
+  projects      Project[] @relation("UserProjects")
+  assets        Asset[]
+  referrals     Referral[] @relation("UserReferrals")
+  referredBy    Referral?  @relation("ReferredUser", fields: [referredById], references: [id])
+  referredById  String?    @unique
+  comments      Comment[]
+  components    CustomComponent[]
+  purchases     Purchase[]
+  auditLogs     AuditLog[]
+}
+
+model Organization {
+  id          String   @id @default(uuid())
+  name        String
+  slug        String   @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  users       User[]
+  projects    Project[]
+  knowledge   KnowledgeBase[]
+}
+
+// Проекты (Сайты, Презентации, Бренды)
+model Project {
+  id            String    @id @default(uuid())
+  name          String
+  brandName     String
+  niche         String?
+  style         String?
+  brandAssets   String?     // Use String for SQLite
+  pages         String?     // Use String for SQLite
+  presentation  String?     // Use String for SQLite
+  seo           String?     // Use String for SQLite
+  history       String?     // Use String for SQLite
+  personalizationRules String? // JSON array of rules
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  owner         User      @relation("UserProjects", fields: [ownerId], references: [id])
+  ownerId       String
+  
+  organizationId String?
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  
+  collaborators Collaborator[]
+  comments      Comment[]
+  assets        Asset[]
+  abTests       ABTest[]
+  versions      ProjectVersion[]
+  dataTables    DataTable[]
+  leads         Lead[]
+  products      Product[]
+  categories    Category[]
+  posts         BlogPost[]
+  snapshots     ProjectSnapshot[]
+  integrations  Integration[]
+}
+
+model Integration {
+  id          String   @id @default(uuid())
+  projectId   String
+  name        String   // 'Webhook', 'Slack', etc.
+  type        String   // 'webhook'
+  config      String   // JSON config (e.g. { url: '...' })
+  events      String   // Comma-separated events: 'lead.created', 'order.created'
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model ProjectSnapshot {
+  id          String   @id @default(uuid())
+  projectId   String?
+  name        String
+  type        String   // 'block' or 'page'
+  category    String?  // 'hero', 'features', etc.
+  content     String   // JSON string of block/page data
+  preview     String?
+  isPublic    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  project     Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+}
+
+model BlogPost {
+  id          String   @id @default(uuid())
+  projectId   String
+  title       String
+  slug        String
+  content     String     // Markdown content
+  excerpt     String?
+  image       String?
+  author      String?
+  status      String   @default("draft") // draft, published
+  seoTitle    String?
+  seoDesc     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, slug])
+}
+
+model Product {
+  id          String   @id @default(uuid())
+  projectId   String
+  name        String
+  description String?
+  price       Float
+  image       String?
+  categoryId  String?
+  stock       Int      @default(-1) // -1 for infinite
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  category    Category? @relation(fields: [categoryId], references: [id])
+}
+
+model Category {
+  id          String   @id @default(uuid())
+  projectId   String
+  name        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  products    Product[]
+}
+
+model Lead {
+  id        String   @id @default(uuid())
+  projectId String
+  name      String?
+  email     String?
+  phone     String?
+  message   String?
+  data      String?    // JSON for additional fields (SQLite use String)
+  status    String   @default("new") // new, contacting, qualified, closed
+  tags      String?    // Tag list (SQLite use String)
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model ProjectVersion {
+  id          String   @id @default(uuid())
+  projectId   String
+  name        String   // v1.0, "Draft", etc.
+  description String?
+  data        String     // Use String for SQLite
+  createdAt   DateTime @default(now())
+  
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+// База знаний (RAG)
+model KnowledgeBase {
+  id             String   @id @default(uuid())
+  name           String
+  description    String?
+  organizationId String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  documents      Document[]
+}
+
+model Document {
+  id              String   @id @default(uuid())
+  knowledgeBaseId String
+  name            String
+  type            String   // pdf, txt, md
+  content         String
+  createdAt       DateTime @default(now())
+  
+  knowledgeBase   KnowledgeBase @relation(fields: [knowledgeBaseId], references: [id], onDelete: Cascade)
+  chunks          DocumentChunk[]
+}
+
+model DocumentChunk {
+  id          String   @id @default(uuid())
+  documentId  String
+  content     String
+  embedding   String?    // Use String for SQLite
+  
+  document    Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+}
+
+// Аудит-логи
+model AuditLog {
+  id          String   @id @default(uuid())
+  userId      String
+  action      String   // login, project_create, ai_generate, etc.
+  resource    String   // project, user, ai_model
+  resourceId  String?
+  details     String?    // Use String for SQLite
+  ip          String?
+  userAgent   String?
+  createdAt   DateTime @default(now())
+  
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+// Локальные таблицы (User-defined DB)
+model DataTable {
+  id          String   @id @default(uuid())
+  projectId   String
+  name        String
+  schema      String     // Use String for SQLite
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  rows        DataRow[]
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model DataRow {
+  id          String   @id @default(uuid())
+  tableId     String
+  data        String     // Use String for SQLite
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  table       DataTable @relation(fields: [tableId], references: [id], onDelete: Cascade)
+}
+
+// Коллаборация и роли
+model Collaborator {
+  id        String   @id @default(uuid())
+  projectId String
+  userId    String
+  role      String   // owner, admin, editor, commenter, viewer
+  joinedAt  DateTime @default(now())
+  
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  
+  @@unique([projectId, userId])
+}
+
+// Медиатека (DAM)
+model Asset {
+  id            String   @id @default(uuid())
+  name          String
+  type          String   // image, video, document, etc.
+  url           String
+  thumbnailUrl  String?
+  size          Int
+  mimeType      String
+  category      String   @default("uncategorized")
+  tags          String?  // Use String for SQLite
+  metadata      String?    // Use String for SQLite
+  isPublic      Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  user          User     @relation(fields: [userId], references: [id])
+  userId        String
+  project       Project? @relation(fields: [projectId], references: [id])
+  projectId     String?
+}
+
+// Система комментариев
+model Comment {
+  id          String    @id @default(uuid())
+  content     String
+  elementId   String?   // ID блока или слайда
+  elementType String?   // block, slide, page
+  position    String?     // Use String for SQLite
+  resolved    Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String
+  project     Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId   String
+  
+  parentId    String?
+  replies     Comment[] @relation("CommentReplies")
+  parent      Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
+}
+
+// A/B Тестирование
+model ABTest {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  status      String   @default("running") // running, paused, completed
+  goalType    String   // click, form_submit, purchase
+  trafficA    Int      @default(50)
+  trafficB    Int      @default(50)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId   String
+  
+  variants    ABVariant[]
+}
+
+model ABVariant {
+  id          String   @id @default(uuid())
+  testId      String
+  name        String   // A or B
+  config      String     // Use String for SQLite
+  visitors    Int      @default(0)
+  conversions Int      @default(0)
+  
+  test        ABTest   @relation(fields: [testId], references: [id], onDelete: Cascade)
+}
+
+// Реферальная программа
+model Referral {
+  id            String   @id @default(uuid())
+  referrer      User     @relation("UserReferrals", fields: [referrerId], references: [id])
+  referrerId    String
+  referredEmail String
+  type          String   // user, seller
+  status        String   @default("pending")
+  rewardAmount  Float    @default(0)
+  createdAt     DateTime @default(now())
+  activatedAt   DateTime?
+  
+  referredUser  User?    @relation("ReferredUser")
+}
+
+// Пользовательские компоненты и маркетплейс
+model CustomComponent {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  code        String
+  props       String?    // Use String for SQLite
+  category    String
+  isPublic    Boolean  @default(false)
+  downloads   Int      @default(0)
+  rating      Float    @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  author      User     @relation(fields: [authorId], references: [id])
+  authorId    String
+}
+
+model Template {
+  id             String    @id @default(uuid())
+  name           String
+  description    String
+  category       String
+  thumbnail      String
+  previewImages  String?   // Use String for SQLite
+  price          Float     @default(0)
+  rating         Float     @default(0)
+  reviewsCount   Int       @default(0)
+  downloadsCount Int       @default(0)
+  tags           String?   // Use String for SQLite
+  featured       Boolean   @default(false)
+  data           String      // Use String for SQLite
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  
+  authorId       String
+  reviews        TemplateReview[]
+}
+
+model TemplateReview {
+  id         String   @id @default(uuid())
+  templateId String
+  userId     String
+  userName   String
+  rating     Int
+  comment    String
+  createdAt  DateTime @default(now())
+  
+  template   Template @relation(fields: [templateId], references: [id], onDelete: Cascade)
+}
+
+model Purchase {
+  id          String   @id @default(uuid())
+  userId      String
+  itemId      String
+  itemType    String   // template, component, plugin
+  amount      Float
+  status      String   @default("completed")
+  createdAt   DateTime @default(now())
+  
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+// Автономные агенты (Phase 6)
+model Agent {
+  id          String   @id @default(uuid())
+  name        String   // Designer, Copywriter, etc.
+  type        String   
+  role        String   // system, user-assistant
+  capabilities String? // Use String for SQLite
+  personality  String? // JSON: { tone: 0.8, humor: 0.2, strictness: 0.5 }
+  skills       String? // JSON array of skill strings
+  status      String   @default("idle") // idle, busy, offline
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  tasks       Task[]
+  messages    AgentMessage[] @relation("SentMessages")
+}
+
+model Task {
+  id          String   @id @default(uuid())
+  projectId   String
+  title       String
+  description String?
+  status      String   @default("pending") // pending, in_progress, completed, failed
+  priority    Int      @default(0)
+  inputData   String?    // Use String for SQLite
+  outputData  String?    // Use String for SQLite
+  parentTaskId String?
+  
+  assignedAgentId String?
+  agent       Agent?   @relation(fields: [assignedAgentId], references: [id])
+  
+  messages    AgentMessage[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model AgentMessage {
+  id          String   @id @default(uuid())
+  taskId      String
+  senderId    String
+  receiverId  String?
+  content     String
+  type        String   @default("text") // info, error, request, result
+  metadata    String?    // Use String for SQLite
+  createdAt   DateTime @default(now())
+  
+  task        Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  sender      Agent    @relation("SentMessages", fields: [senderId], references: [id])
+}
+
+model AgentMemory {
+  id          String   @id @default(uuid())
+  agentType   String
+  key         String
+  value       String     // Use String for SQLite
+  organizationId String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@unique([agentType, key, organizationId])
+}

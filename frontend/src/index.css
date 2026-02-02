@@ -1,0 +1,385 @@
+@import "tailwindcss";
+@import "./a11y.css";
+
+@layer base {
+:root {
+    --brand-primary: 79 70 229; /* Indigo 600 */
+    --brand-secondary: 124 58 237; /* Violet 600 */
+    --bg-main: 248 250 252;
+}
+
+* {
+    @apply transition-colors duration-200;
+}
+
+body {
+    @apply bg-slate-50 text-slate-900 antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Responsive typography */
+h1, h2, h3, h4, h5, h6 {
+    @apply font-black tracking-tight;
+}
+
+h1 {
+    @apply text-2xl sm:text-3xl lg:text-4xl;
+}
+
+h2 {
+    @apply text-xl sm:text-2xl lg:text-3xl;
+}
+
+h3 {
+    @apply text-lg sm:text-xl lg:text-2xl;
+}
+
+p {
+    @apply text-sm sm:text-base leading-relaxed;
+}
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_0_rgba(31,38,135,0.07)];
+  }
+
+  .premium-button {
+    @apply relative overflow-hidden transition-all duration-300 active:scale-95;
+    background: linear-gradient(135deg, rgb(var(--brand-primary)), rgb(var(--brand-secondary)));
+  }
+
+  .premium-button::after {
+    content: '';
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+  }
+
+  .premium-button:hover::after {
+    @apply opacity-100;
+  }
+
+  .premium-button:focus-visible {
+    @apply outline-none ring-2 ring-indigo-500 ring-offset-2;
+  }
+
+  .step-indicator {
+    @apply w-2 h-2 rounded-full transition-all duration-500;
+  }
+
+  .step-indicator.active {
+    @apply w-8 bg-indigo-600;
+  }
+
+  .step-indicator.pending {
+    @apply bg-slate-200;
+  }
+
+  /* Enhanced button styles */
+  button {
+    @apply transition-all duration-200;
+  }
+
+  button:focus-visible {
+    @apply outline-none ring-2 ring-indigo-500 ring-offset-2;
+  }
+
+  button:hover {
+    @apply transform;
+  }
+
+  button:active {
+    @apply scale-95;
+  }
+
+  /* Enhanced card styles */
+  .card {
+    @apply bg-white rounded-[24px] sm:rounded-[32px] border border-slate-100 shadow-sm;
+    @apply transition-all duration-300;
+  }
+
+  .card:hover {
+    @apply shadow-xl border-indigo-100;
+  }
+
+  /* Enhanced input styles */
+  input, textarea, select {
+    @apply transition-all duration-200;
+  }
+
+  input:focus, textarea:focus, select:focus {
+    @apply outline-none ring-2 ring-indigo-500 ring-offset-2 border-indigo-500;
+  }
+
+  /* Smooth transitions for all interactive elements */
+  a, button, [role="button"] {
+    @apply transition-all duration-200;
+  }
+
+  a:hover, button:hover, [role="button"]:hover {
+    @apply transform;
+  }
+}
+
+/* Custom scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-slate-200 rounded-full hover:bg-slate-300 transition-colors;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-400;
+}
+
+/* Global scrollbar for mobile */
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+}
+
+/* Enhanced focus styles for accessibility */
+*:focus-visible {
+  @apply outline-none ring-2 ring-indigo-500 ring-offset-2 rounded;
+}
+
+/* Smooth page transitions */
+.page-transition {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+/* Loading animation */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.skeleton {
+  animation: shimmer 2s infinite linear;
+  background: linear-gradient(to right, #f0f0f0 8%, #e0e0e0 18%, #f0f0f0 33%);
+  background-size: 1000px 100%;
+}
+
+/* Improved spacing utilities */
+.space-responsive {
+  @apply space-y-4 sm:space-y-6 lg:space-y-8;
+}
+
+.gap-responsive {
+  @apply gap-4 sm:gap-6 lg:gap-8;
+}
+
+.p-responsive {
+  @apply p-4 sm:p-6 lg:p-8;
+}
+
+.px-responsive {
+  @apply px-4 sm:px-6 lg:px-8;
+}
+
+.py-responsive {
+  @apply py-4 sm:py-6 lg:py-8;
+}
+
+/* Вау эффекты для шага 3 WizardForm */
+
+/* Shimmer анимация для изображений */
+@keyframes shimmer-shine {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.shimmer-image {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  background-size: 1000px 100%;
+  animation: shimmer-shine 2s infinite;
+}
+
+/* Glow эффекты */
+.glow-effect {
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.5),
+              0 0 40px rgba(99, 102, 241, 0.3),
+              0 0 60px rgba(99, 102, 241, 0.1);
+}
+
+.glow-effect-purple {
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.5),
+              0 0 40px rgba(168, 85, 247, 0.3),
+              0 0 60px rgba(168, 85, 247, 0.1);
+}
+
+.glow-effect-pink {
+  box-shadow: 0 0 20px rgba(236, 72, 153, 0.5),
+              0 0 40px rgba(236, 72, 153, 0.3),
+              0 0 60px rgba(236, 72, 153, 0.1);
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.5),
+                0 0 40px rgba(99, 102, 241, 0.3),
+                0 0 60px rgba(99, 102, 241, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(99, 102, 241, 0.7),
+                0 0 60px rgba(99, 102, 241, 0.5),
+                0 0 90px rgba(99, 102, 241, 0.3);
+  }
+}
+
+.glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* 3D трансформации */
+.card-3d {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform;
+}
+
+.card-3d:hover {
+  transform: translateY(-12px) rotateX(5deg) rotateY(2deg) scale(1.02);
+}
+
+.card-3d-selected {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 20px 60px rgba(99, 102, 241, 0.4),
+              0 0 40px rgba(99, 102, 241, 0.2);
+}
+
+/* Sparkle эффекты */
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1) rotate(180deg);
+  }
+}
+
+.sparkle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  animation: sparkle 1.5s ease-in-out infinite;
+}
+
+.sparkle:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+.sparkle:nth-child(2) { top: 20%; right: 15%; animation-delay: 0.3s; }
+.sparkle:nth-child(3) { bottom: 15%; left: 20%; animation-delay: 0.6s; }
+.sparkle:nth-child(4) { bottom: 10%; right: 10%; animation-delay: 0.9s; }
+
+/* Shine эффект */
+@keyframes shine {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(200%) translateY(200%) rotate(45deg);
+  }
+}
+
+.shine-effect::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.5) 50%,
+    transparent 70%
+  );
+  animation: shine 3s infinite;
+  pointer-events: none;
+}
+
+/* Градиентные placeholder */
+.gradient-placeholder {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.gradient-placeholder::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  animation: shimmer-shine 2s infinite;
+}
+
+/* Параллакс эффект */
+.parallax-item {
+  transition: transform 0.3s ease-out;
+  will-change: transform;
+}
+
+/* Анимация появления карточек */
+@keyframes card-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) rotateX(10deg) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotateX(0) scale(1);
+  }
+}
+
+.card-enter {
+  animation: card-enter 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+/* Анимация фильтров */
+.filter-transition {
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Улучшенные тени для карточек */
+.card-shadow-hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+              0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.3s ease;
+}
+
+.card-shadow-hover:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+              0 10px 10px -5px rgba(0, 0, 0, 0.04),
+              0 0 30px rgba(99, 102, 241, 0.3);
+}

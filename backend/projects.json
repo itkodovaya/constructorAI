@@ -1,0 +1,310 @@
+[
+  {
+    "id": "wjtepnjzb",
+    "brandName": "кодовая",
+    "niche": "tech",
+    "style": "tech",
+    "colors": [],
+    "goals": [
+      "site"
+    ],
+    "brandAssets": {
+      "logo": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgICAgIDxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjM0I4MkY2IiByeD0iNDAiLz4KICAgICAgPHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJKZXRCcmFpbnMgTW9ubyIgZm9udC1zaXplPSI4MCIgZm9udC13ZWlnaHQ9IjkwMCIgCiAgICAgICAgZmlsbD0iIzBGMTcyQSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9ImNlbnRyYWwiPgogICAgICAgINCaCiAgICAgIDwvdGV4dD4KICAgIDwvc3ZnPg==",
+      "palette": [
+        "#0F172A",
+        "#3B82F6",
+        "#60A5FA",
+        "#1E293B"
+      ],
+      "fonts": [
+        "JetBrains Mono",
+        "Plus Jakarta Sans"
+      ]
+    },
+    "seo": {
+      "title": "кодовая",
+      "description": "Создано с помощью Constructor AI",
+      "keywords": "ai, design, website, brand"
+    },
+    "pages": [
+      {
+        "id": "1",
+        "title": "Home",
+        "blocks": [
+          {
+            "id": "hero-1",
+            "type": "hero",
+            "content": {
+              "title": "Добро пожаловать в кодовая",
+              "subtitle": "Лучшие решения в нише tech специально для вас.",
+              "buttonText": "Узнать больше"
+            }
+          },
+          {
+            "id": "features-1",
+            "type": "features",
+            "content": {
+              "items": [
+                {
+                  "title": "Качество",
+                  "description": "Мы гарантируем высшее качество."
+                },
+                {
+                  "title": "Скорость",
+                  "description": "Быстрое выполнение задач."
+                },
+                {
+                  "title": "Надежность",
+                  "description": "Нам доверяют тысячи клиентов."
+                }
+              ]
+            }
+          },
+          {
+            "id": "pricing-1",
+            "type": "pricing",
+            "content": {
+              "title": "Тарифные планы",
+              "plans": [
+                {
+                  "name": "Старт",
+                  "price": "0",
+                  "features": [
+                    "Базовый функционал",
+                    "1 проект",
+                    "Поддержка сообщества"
+                  ]
+                },
+                {
+                  "name": "Про",
+                  "price": "49",
+                  "features": [
+                    "Все функции",
+                    "Безлимит проектов",
+                    "Приоритетная поддержка"
+                  ],
+                  "popular": true
+                }
+              ]
+            }
+          },
+          {
+            "id": "footer-1",
+            "type": "footer",
+            "content": {
+              "text": "© 2026 кодовая. Все права защищены."
+            }
+          }
+        ]
+      }
+    ],
+    "presentation": [
+      {
+        "id": "1",
+        "title": "кодовая",
+        "content": "Инновационное решение в сфере tech",
+        "type": "title"
+      },
+      {
+        "id": "2",
+        "title": "Проблема",
+        "content": "Современный рынок требует новых подходов и автоматизации процессов.",
+        "type": "content"
+      },
+      {
+        "id": "3",
+        "title": "Наше решение",
+        "content": "Мы предлагаем уникальную платформу кодовая, которая решает ключевые боли клиентов.",
+        "type": "content"
+      },
+      {
+        "id": "4",
+        "title": "Преимущества",
+        "content": "Скорость, Качество, Инновации, Эффективность",
+        "type": "features"
+      },
+      {
+        "id": "5",
+        "title": "Контакты",
+        "content": "Свяжитесь с нами для демонстрации продукта.",
+        "type": "contact"
+      }
+    ],
+    "history": [
+      {
+        "id": "1769645642053",
+        "timestamp": "03:14:02",
+        "action": "Создание проекта",
+        "assets": {
+          "logo": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgICAgIDxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjM0I4MkY2IiByeD0iNDAiLz4KICAgICAgPHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJKZXRCcmFpbnMgTW9ubyIgZm9udC1zaXplPSI4MCIgZm9udC13ZWlnaHQ9IjkwMCIgCiAgICAgICAgZmlsbD0iIzBGMTcyQSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9ImNlbnRyYWwiPgogICAgICAgINCaCiAgICAgIDwvdGV4dD4KICAgIDwvc3ZnPg==",
+          "palette": [
+            "#0F172A",
+            "#3B82F6",
+            "#60A5FA",
+            "#1E293B"
+          ],
+          "fonts": [
+            "JetBrains Mono",
+            "Plus Jakarta Sans"
+          ]
+        }
+      }
+    ],
+    "createdAt": "2026-01-29T00:14:02.053Z",
+    "updatedAt": "2026-01-29T00:14:02.053Z"
+  },
+  {
+    "id": "1jalch7az",
+    "brandName": "Кодовая",
+    "niche": "beauty",
+    "style": "tech",
+    "colors": [],
+    "goals": [
+      "brandkit"
+    ],
+    "brandAssets": {
+      "logo": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgICAgIDxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjM0I4MkY2IiByeD0iNDAiLz4KICAgICAgPHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJKZXRCcmFpbnMgTW9ubyIgZm9udC1zaXplPSI4MCIgZm9udC13ZWlnaHQ9IjkwMCIgCiAgICAgICAgZmlsbD0iIzBGMTcyQSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9ImNlbnRyYWwiPgogICAgICAgINCaCiAgICAgIDwvdGV4dD4KICAgIDwvc3ZnPg==",
+      "palette": [
+        "#0F172A",
+        "#3B82F6",
+        "#60A5FA",
+        "#1E293B"
+      ],
+      "fonts": [
+        "JetBrains Mono",
+        "Plus Jakarta Sans"
+      ]
+    },
+    "seo": {
+      "title": "Кодовая",
+      "description": "Создано с помощью Constructor AI",
+      "keywords": "ai, design, website, brand"
+    },
+    "pages": [
+      {
+        "id": "1",
+        "title": "Home",
+        "blocks": [
+          {
+            "id": "hero-1",
+            "type": "hero",
+            "content": {
+              "title": "Добро пожаловать в Кодовая",
+              "subtitle": "Лучшие решения в нише beauty специально для вас.",
+              "buttonText": "Узнать больше"
+            }
+          },
+          {
+            "id": "features-1",
+            "type": "features",
+            "content": {
+              "items": [
+                {
+                  "title": "Качество",
+                  "description": "Мы гарантируем высшее качество."
+                },
+                {
+                  "title": "Скорость",
+                  "description": "Быстрое выполнение задач."
+                },
+                {
+                  "title": "Надежность",
+                  "description": "Нам доверяют тысячи клиентов."
+                }
+              ]
+            }
+          },
+          {
+            "id": "pricing-1",
+            "type": "pricing",
+            "content": {
+              "title": "Тарифные планы",
+              "plans": [
+                {
+                  "name": "Старт",
+                  "price": "0",
+                  "features": [
+                    "Базовый функционал",
+                    "1 проект",
+                    "Поддержка сообщества"
+                  ]
+                },
+                {
+                  "name": "Про",
+                  "price": "49",
+                  "features": [
+                    "Все функции",
+                    "Безлимит проектов",
+                    "Приоритетная поддержка"
+                  ],
+                  "popular": true
+                }
+              ]
+            }
+          },
+          {
+            "id": "footer-1",
+            "type": "footer",
+            "content": {
+              "text": "© 2026 Кодовая. Все права защищены."
+            }
+          }
+        ]
+      }
+    ],
+    "presentation": [
+      {
+        "id": "1",
+        "title": "Кодовая",
+        "content": "Инновационное решение в сфере beauty",
+        "type": "title"
+      },
+      {
+        "id": "2",
+        "title": "Проблема",
+        "content": "Современный рынок требует новых подходов и автоматизации процессов.",
+        "type": "content"
+      },
+      {
+        "id": "3",
+        "title": "Наше решение",
+        "content": "Мы предлагаем уникальную платформу Кодовая, которая решает ключевые боли клиентов.",
+        "type": "content"
+      },
+      {
+        "id": "4",
+        "title": "Преимущества",
+        "content": "Скорость, Качество, Инновации, Эффективность",
+        "type": "features"
+      },
+      {
+        "id": "5",
+        "title": "Контакты",
+        "content": "Свяжитесь с нами для демонстрации продукта.",
+        "type": "contact"
+      }
+    ],
+    "history": [
+      {
+        "id": "1769646051120",
+        "timestamp": "03:20:51",
+        "action": "Создание проекта",
+        "assets": {
+          "logo": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgICAgIDxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjM0I4MkY2IiByeD0iNDAiLz4KICAgICAgPHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJKZXRCcmFpbnMgTW9ubyIgZm9udC1zaXplPSI4MCIgZm9udC13ZWlnaHQ9IjkwMCIgCiAgICAgICAgZmlsbD0iIzBGMTcyQSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9ImNlbnRyYWwiPgogICAgICAgINCaCiAgICAgIDwvdGV4dD4KICAgIDwvc3ZnPg==",
+          "palette": [
+            "#0F172A",
+            "#3B82F6",
+            "#60A5FA",
+            "#1E293B"
+          ],
+          "fonts": [
+            "JetBrains Mono",
+            "Plus Jakarta Sans"
+          ]
+        }
+      }
+    ],
+    "createdAt": "2026-01-29T00:20:51.120Z",
+    "updatedAt": "2026-01-29T00:20:51.120Z"
+  }
+]

@@ -1,0 +1,76 @@
+# Правила оповещений для Prometheus
+
+groups:
+  - name: constructor_alerts
+    interval: 30s
+    rules:
+      # Высокая ошибка 500
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High error rate detected"
+          description: "Error rate is {{ $value }} errors per second"
+
+      # Медленный ответ API
+      - alert: SlowAPIResponse
+        expr: histogram_quantile(0.95, http_request_duration_seconds_bucket) > 2
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Slow API response time"
+          description: "95th percentile response time is {{ $value }} seconds"
+
+      # Высокая загрузка CPU
+      - alert: HighCPUUsage
+        expr: process_cpu_user_seconds_total / process_cpu_seconds_total > 0.8
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU usage"
+          description: "CPU usage is {{ $value | humanizePercentage }}"
+
+      # Высокое использование памяти
+      - alert: HighMemoryUsage
+        expr: process_resident_memory_bytes / 1024 / 1024 / 1024 > 2
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High memory usage"
+          description: "Memory usage is {{ $value }} GB"
+
+      # Сервис недоступен
+      - alert: ServiceDown
+        expr: up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Service is down"
+          description: "{{ $labels.job }} is down"
+
+      # Redis недоступен
+      - alert: RedisDown
+        expr: redis_up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Redis is down"
+          description: "Redis cache is unavailable"
+
+      # Высокая очередь задач AI
+      - alert: HighAIQueue
+        expr: ai_queue_size > 100
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High AI queue size"
+          description: "AI queue has {{ $value }} pending tasks"
+

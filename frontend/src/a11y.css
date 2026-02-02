@@ -1,0 +1,50 @@
+/* Accessibility Overrides */
+
+/* High Contrast */
+body.a11y-high-contrast {
+  filter: contrast(1.2) saturate(0.8);
+  --tw-bg-opacity: 1;
+}
+body.a11y-high-contrast .bg-white {
+  background-color: #ffffff !important;
+  border-color: #000000 !important;
+}
+body.a11y-high-contrast .text-slate-500,
+body.a11y-high-contrast .text-slate-400 {
+  color: #1e293b !important;
+  font-weight: 600;
+}
+
+/* Large Text */
+body.a11y-large-text {
+  font-size: 1.15rem;
+}
+body.a11y-large-text h1 { font-size: 3rem; }
+body.a11y-large-text h2 { font-size: 2.5rem; }
+body.a11y-large-text .text-xs { font-size: 0.85rem; }
+body.a11y-large-text .text-[10px] { font-size: 0.75rem; }
+
+/* Reduced Motion */
+body.a11y-reduced-motion * {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}
+
+/* Dyslexic Font */
+@font-face {
+  font-family: 'OpenDyslexic';
+  src: url('https://opendyslexic.org/font/OpenDyslexic-Regular.otf');
+}
+body.a11y-dyslexic-font {
+  font-family: 'OpenDyslexic', sans-serif !important;
+}
+
+/* Highlight Links */
+body.a11y-highlight-links a, 
+body.a11y-highlight-links button {
+  text-decoration: underline !important;
+  outline: 2px solid #4f46e5 !important;
+  outline-offset: 2px;
+}
+

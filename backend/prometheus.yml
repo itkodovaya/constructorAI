@@ -1,0 +1,80 @@
+# Конфигурация Prometheus для мониторинга ConstructorAI
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: 'constructor-ai'
+    environment: 'production'
+
+# Правила оповещений
+rule_files:
+  - 'alerts.yml'
+
+# Конфигурация scrape targets
+scrape_configs:
+  # Backend API
+  - job_name: 'constructor-backend'
+    static_configs:
+      - targets: ['localhost:3001']
+        labels:
+          service: 'backend'
+          instance: 'backend-1'
+    metrics_path: '/api/metrics'
+    scrape_interval: 10s
+
+  # API Gateway
+  - job_name: 'api-gateway'
+    static_configs:
+      - targets: ['localhost:3000']
+        labels:
+          service: 'gateway'
+          instance: 'gateway-1'
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+
+  # Auth Service
+  - job_name: 'auth-service'
+    static_configs:
+      - targets: ['localhost:3003']
+        labels:
+          service: 'auth'
+          instance: 'auth-1'
+    metrics_path: '/metrics'
+    scrape_interval: 15s
+
+  # Projects Service
+  - job_name: 'projects-service'
+    static_configs:
+      - targets: ['localhost:3004']
+        labels:
+          service: 'projects'
+          instance: 'projects-1'
+    metrics_path: '/metrics'
+    scrape_interval: 15s
+
+  # AI Service
+  - job_name: 'ai-service'
+    static_configs:
+      - targets: ['localhost:3005']
+        labels:
+          service: 'ai'
+          instance: 'ai-1'
+    metrics_path: '/metrics'
+    scrape_interval: 15s
+
+  # Export Service
+  - job_name: 'export-service'
+    static_configs:
+      - targets: ['localhost:3006']
+        labels:
+          service: 'export'
+          instance: 'export-1'
+    metrics_path: '/metrics'
+    scrape_interval: 15s
+
+  # Prometheus сам себя
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+

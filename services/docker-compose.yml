@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - AUTH_SERVICE_URL=http://auth-service:3003
+      - PROJECTS_SERVICE_URL=http://projects-service:3004
+      - AI_SERVICE_URL=http://ai-service:3005
+      - EXPORT_SERVICE_URL=http://export-service:3006
+    depends_on:
+      - auth-service
+      - projects-service
+      - ai-service
+      - export-service
+    networks:
+      - constructor-network
+
+  auth-service:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    ports:
+      - "3003:3003"
+    networks:
+      - constructor-network
+
+  projects-service:
+    build:
+      context: ./projects-service
+      dockerfile: Dockerfile
+    ports:
+      - "3004:3004"
+    volumes:
+      - ./data:/app/data
+    networks:
+      - constructor-network
+
+  ai-service:
+    build:
+      context: ./ai-service
+      dockerfile: Dockerfile
+    ports:
+      - "3005:3005"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+    networks:
+      - constructor-network
+
+  export-service:
+    build:
+      context: ./export-service
+      dockerfile: Dockerfile
+    ports:
+      - "3006:3006"
+    networks:
+      - constructor-network
+
+networks:
+  constructor-network:
+    driver: bridge
+
