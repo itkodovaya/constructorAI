@@ -30,6 +30,28 @@ git config user.email "your.email@example.com"
 
 ## Шаг 2: Подключение локального репозитория к GitHub
 
+### Вариант А: Автоматическая публикация (рекомендуется)
+
+Используйте готовый скрипт для автоматической публикации:
+
+**Windows:**
+```bash
+scripts\publish-to-github.bat
+```
+
+**Linux/Mac:**
+```bash
+chmod +x scripts/publish-to-github.sh
+./scripts/publish-to-github.sh
+```
+
+Скрипт автоматически:
+- Проверит настройки Git
+- Настроит remote origin
+- Отправит код на GitHub
+
+### Вариант Б: Ручная публикация
+
 После создания репозитория GitHub покажет инструкции. Выполните следующие команды:
 
 ```bash

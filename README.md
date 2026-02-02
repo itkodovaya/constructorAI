@@ -35,6 +35,23 @@ git clone https://github.com/USERNAME/constructor-ai-platform.git
 cd constructor-ai-platform
 ```
 
+### Публикация на GitHub
+
+Если вы хотите опубликовать свой форк проекта на GitHub:
+
+**Windows:**
+```bash
+scripts\publish-to-github.bat
+```
+
+**Linux/Mac:**
+```bash
+chmod +x scripts/publish-to-github.sh
+./scripts/publish-to-github.sh
+```
+
+Подробные инструкции: [GITHUB_SETUP.md](GITHUB_SETUP.md)
+
 ### Требования
 - Node.js 18+ 
 - npm или yarn
